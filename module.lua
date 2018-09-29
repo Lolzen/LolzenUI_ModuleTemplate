@@ -3,18 +3,20 @@
 --[[ You must register the module with LolzenUI
 	 this will add the module in LolzenUI.modules table and be eligable for the checkBox and OptionPanel creation
 	 
-	 LolzenUI.RegisterModule("name")
-	 "name": the name of the module
+	 LolzenUI.RegisterModule("name", "about", hasOptions)
+	 "name": [string] the name of the module
+	 "about": [string] a short description of what the module does
+	 "hasOptions: [boolean] tells LolzenUI to either or omit the optionpanel xreation for this module
 	 
-	 in our case we register a module named "template"
+	 in our case we register a module named "template". set the dexription to "Template for LolzenUI modules" and create an Optionpanel
 ]]
-LolzenUI.RegisterModule("template")
+LolzenUI.RegisterModule("template", "Template for LolzenUI modules", true)
 
 --[[ You must tell LolzenUI if your module is either on or off by default
 
 	 LolzenUI.modules["name"] = bool
-	 "name": the name of the module (the same we used in LolzenUI.RegisterModule())
-	 "bool": true = on by default, false = off by default
+	 "name": [string] the name of the module (the same we used in LolzenUI.RegisterModule())
+	 "bool": [boolean] true = on by default, false = off by default
 
 	 in our case we will make it ON per DEFAULT
 ]]
@@ -128,6 +130,9 @@ f:SetScript("OnEvent", function(self, event, addon)
 	]]
 	-- let's add some options, but only if LolzenUI_Options is loaded
 	if addon == "LolzenUI_Options" then
+		-- use a check to determine if the module is activated (on) or deactivated (off)
+		if LolzenUIcfg.modules["template"] == false then return end
+
 		-- we call LolzenUI_Options.createOptionPanels() so we can use LolzenUI_Options' functions (see IMPORTANT NOTICE)
 		LolzenUI_Options.createOptionPanels()
 
