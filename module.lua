@@ -1,16 +1,33 @@
 ﻿--// custom module template //--
 
+--[[ You can localize your module to different languages
+	 In the example below we check for the german locale and use german translations, else we fall back to english
+	 We only translate the module name and the description, feel free to localize every option.
+]]
+local L = LolzenUI.L
+if GetLocale() == "deDE" then
+	L = {
+		["template"] = "Vorlage",
+		["template_desc"] = "Vorlage für LolzenUI module",
+	}
+else
+	L = {
+		["template"] = "template",
+		["template_desc"] = "Template for LolzenUI modules",
+	}
+end
+
 --[[ You must register the module with LolzenUI
 	 this will add the module in LolzenUI.modules table and be eligable for the checkBox and OptionPanel creation
 	 
 	 LolzenUI.RegisterModule("name", "about", hasOptions)
-	 "name": [string] the name of the module
-	 "about": [string] a short description of what the module does
+	 "name": [string] the name of the module (can be localized, see example above)
+	 "about": [string] a short description of what the module does (can be localized, see example above)
 	 "hasOptions: [boolean] tells LolzenUI to either or omit the optionpanel xreation for this module
 	 
-	 in our case we register a module named "template". set the dexription to "Template for LolzenUI modules" and create an Optionpanel
+	 in our case we register a module with our localized name and set the localized description and create an Optionpanel
 ]]
-LolzenUI.RegisterModule("template", "Template for LolzenUI modules", true)
+LolzenUI.RegisterModule(L["template"], L["template_desc"], true)
 
 --[[ You must tell LolzenUI if your module is either on or off by default
 
@@ -194,45 +211,41 @@ f:SetScript("OnEvent", function(self, event, addon)
 		local picker4 = LolzenUI_Options.createPicker("template", "flag", "example_picker_flag", 100, "THINOUTLINE")
 		picker4:SetPoint("LEFT", picker4_text, "RIGHT", -10, -3)
 
-		local picker5_text = LolzenUI_Options.createFontstring("template", "bin picker:")
+		local picker5_text = LolzenUI_Options.createFontstring("template", "growth picker:")
 		picker5_text:SetPoint("TOPLEFT", picker4_text, "BOTTOMLEFT", 0, -15)
 
-		local picker5 = LolzenUI_Options.createPicker("template", "bin", "example_picker_bin", 40, 1)
+		local picker5 = LolzenUI_Options.createPicker("template", "growth", "example_picker_growth", 80, "ABOVE")
 		picker5:SetPoint("LEFT", picker5_text, "RIGHT", -10, -3)
 
-		local picker6_text = LolzenUI_Options.createFontstring("template", "growth picker:")
+		local picker6_text = LolzenUI_Options.createFontstring("template", "statusbar picker:")
 		picker6_text:SetPoint("TOPLEFT", picker5_text, "BOTTOMLEFT", 0, -15)
 
-		local picker6 = LolzenUI_Options.createPicker("template", "growth", "example_picker_growth", 80, "ABOVE")
+		local picker6 = LolzenUI_Options.createPicker("template", "statusbar", "example_picker_statusbar", 140, "LolzenUI Standard")
 		picker6:SetPoint("LEFT", picker6_text, "RIGHT", -10, -3)
 
-		local picker7_text = LolzenUI_Options.createFontstring("template", "statusbar picker:")
+		local picker7_text = LolzenUI_Options.createFontstring("template", "background picker:")
 		picker7_text:SetPoint("TOPLEFT", picker6_text, "BOTTOMLEFT", 0, -15)
 
-		local picker7 = LolzenUI_Options.createPicker("template", "statusbar", "example_picker_statusbar", 140, "LolzenUI Standard")
+		local picker7 = LolzenUI_Options.createPicker("template", "background", "example_picker_background", 140, "LolzenUI Standard")
 		picker7:SetPoint("LEFT", picker7_text, "RIGHT", -10, -3)
 
-		local picker8_text = LolzenUI_Options.createFontstring("template", "background picker:")
+		local picker8_text = LolzenUI_Options.createFontstring("template", "border picker:")
 		picker8_text:SetPoint("TOPLEFT", picker7_text, "BOTTOMLEFT", 0, -15)
 
-		local picker8 = LolzenUI_Options.createPicker("template", "background", "example_picker_background", 140, "LolzenUI Standard")
+		local picker8 = LolzenUI_Options.createPicker("template", "border", "example_picker_border", 140, "LolzenUI Standard")
 		picker8:SetPoint("LEFT", picker8_text, "RIGHT", -10, -3)
 
-		local picker9_text = LolzenUI_Options.createFontstring("template", "border picker:")
-		picker9_text:SetPoint("TOPLEFT", picker8_text, "BOTTOMLEFT", 0, -15)
-
-		local picker9 = LolzenUI_Options.createPicker("template", "border", "example_picker_border", 140, "LolzenUI Standard")
-		picker9:SetPoint("LEFT", picker9_text, "RIGHT", -10, -3)
-
-		--[[	These are the okay & default functions
-				with these funcions we tell the optionpanel what to do when we press the okay or default buttons
+		--[[	These are the apply settings & default functions
+				with these funcions we tell the optionpanel what to do when we press the apply settings or default buttons
 				
-				In this example we only set the saved variable "LolzenUIcfg.template["template_checkbox"]" to the status which cb1 is set on okay, or true on default
+				In this example we only set the saved variable "LolzenUIcfg.template["template_checkbox"]" to the status which cb1 is set on apply settings, or true on default
 				Normally you would set every option we have in these two functions, else as you an test, the picker and editbox options aren't saved
 		]]
-		LolzenUI_Options["template"].okay = function(self)
+		local applyButton = LolzenUI_Options.createApplyButton(L["template"])
+		applyButton:SetScript("OnClick", function()
 			LolzenUIcfg.template["template_checkbox"] = cb1:GetChecked()
-		end
+			ReloadUI()
+		end)
 
 		LolzenUI_Options["template"].default = function(self)
 			LolzenUIcfg.template["template_checkbox"] = true
