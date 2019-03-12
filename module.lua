@@ -131,19 +131,33 @@ f:SetScript("OnEvent", function(self, event, addon)
 		parent: the parent for the overlay (e.g the button we created earlier with LolzenUI_Options.createButtonTexture)
 		"texture": the path to your texture (e.g: "LolzenUI\\media\\gloss"); right now the texture has to be in LolzenUI\\media!
 
-		LolzenUI_Options.createPicker = function("name", "pickertype", "pickerName", width, selected)
+		LolzenUI_Options.createPicker("name", "pickertype", "pickerName", width, selected)
 		"name": the name of your module
 		"pickertype": the type of your picker ["alpha", "anchor", "font", "flag", "bin", "growth", "statusbar", "background", "border"]
 				"alpha": a number ranging from 0.1 to 1
 				"anchor": an anchor point, e.g. "TOPLEFT"
 				"font": LibSharedMedia supported. For fonts. e.g. "DroidSans"
 				"flag":	font flag. e.g. "THINOUTLINE"
-				"bin": binary picker 0/1 (aka. on/off)
 				"growth": similar to anchor, but not as feature rich. valid values are "ABOVE", BELOW, "LEFT" and "RIGHT"
 				"statusbar": LibSharedMedia supported. For statusbar. e.g. "LolzenUI Standard"
 				"background": LibSharedMedia supported. For background. e.g. "LolzenUI Standard"
 				"border":LibSharedMedia supported. For background. e.g. "LolzenUI Standard"
-	
+
+		LolzenUI_Options.createColorTexture("name", width, height, colorVars, "texture")
+		"name": the name of your module
+		width: a number representing the width of the texture
+		height: a number representing the height of the texture
+		colorVars: a table containig r, g, b color values. e. g {0.8, 0.3, 1}
+		"texture": the path to your texture (e.g: "LolzenUI\\media\\statusbar"); right now the texture has to be in LolzenUI\\media!
+
+		LolzenUI_Options.createColorPicker("name", colorRect, colorVars)
+		"name": the name of your module
+		colorRect: a texture which opens up the colorPickerFrame when clicked on. Most likely the name of your color texture created with LolzenUI_Options.createColorTexture (see above)
+		colorVars: a table containig r, g, b color values. e. g {0.8, 0.3, 1}
+
+		LolzenUI_Options.createScrollFrame("name", max)
+		"name": the name of your module
+		max: the maximum height of the scrollframe
 	]]
 	-- let's add some options, but only if LolzenUI_Options is loaded
 	if addon == "LolzenUI_Options" then
