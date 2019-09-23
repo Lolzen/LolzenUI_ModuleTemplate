@@ -1,4 +1,4 @@
-## Interface: 80100
+## Interface: 80200
 ## Author: Lolzen
 ## Title: Lolzen User Interface <Module Template>
 ## Version: 1.0
