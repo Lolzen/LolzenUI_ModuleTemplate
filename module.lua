@@ -23,7 +23,7 @@ end
 	 LolzenUI.RegisterModule("name", "about", hasOptions)
 	 "name": [string] the name of the module (can be localized, see example above)
 	 "about": [string] a short description of what the module does (can be localized, see example above)
-	 "hasOptions: [boolean] tells LolzenUI to either or omit the optionpanel xreation for this module
+	 "hasOptions: [boolean] tells LolzenUI to either create or omit the optionpanel creation for this module
 	 
 	 in our case we register a module with our localized name and set the localized description and create an Optionpanel
 ]]
@@ -168,7 +168,7 @@ f:SetScript("OnEvent", function(self, event, addon)
 		LolzenUI_Options.createOptionPanels()
 
 		-- now we create a title
-		local title = LolzenUI_Options.createTitle("template")
+		local title = LolzenUI_Options.createTitle(L["template"])
 
 		-- and a description which is a simple statement of what our module does
 		local about = LolzenUI_Options.createDescription("template", "User module template with example options")
